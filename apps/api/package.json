@@ -1,0 +1,32 @@
+{
+  "name": "synora-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SYNORA REST API Backend",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "build": "node --check src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/db/seed.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.3",
+    "sql.js": "^1.12.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0",
+    "vitest": "^3.0.8"
+  }
+}
