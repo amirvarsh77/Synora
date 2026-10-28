@@ -31,14 +31,24 @@ class ApiClient {
       let errorMessage = "An error occurred while processing your request.";
       try {
         const errorData = await response.json();
-        errorMessage = errorData.error || errorData.message || errorMessage;
+        if (errorData.details && Array.isArray(errorData.details) && errorData.details.length > 0) {
+          const detailMsgs = errorData.details.map((d) => d.message || `${d.field}: invalid value`).join(", ");
+          errorMessage = detailMsgs;
+        } else {
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        }
       } catch {
         errorMessage = `Server returned status ${response.status}: ${response.statusText}`;
       }
       throw new Error(errorMessage);
     }
     const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("text/csv")) {
+    if (
+      contentType &&
+      (contentType.includes("text/csv") ||
+        contentType.includes("application/pdf") ||
+        contentType.includes("application/octet-stream"))
+    ) {
       return response.blob();
     }
     return response.json();
